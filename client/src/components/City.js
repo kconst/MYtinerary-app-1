@@ -10,9 +10,9 @@ class City extends Component {
       return (
         <div className="city" key={city.id}>
           <div>City: {city.name}</div>
-          <div>
+          {/* <div>
             <img src={city.image} />
-          </div>
+          </div> */}
         </div>
       );
     });

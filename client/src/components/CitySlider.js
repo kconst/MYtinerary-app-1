@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const City = styled.img`
@@ -24,49 +24,49 @@ class CitySlider extends Component {
       slidesPerRow: 2
     };
 
-  return (
-    <div>
-      <Slider {...settings}>
-        <div>
-          <City src={require("../images/bali.jpg")}/>
-        </div>
-        <div>
-        <City src={require("../images/barcelona.jpg")}/>
-        </div>
-        <div>
-        <City src={require("../images/beijing.jpg")}/>
-        </div>
-        <div>
-        <City src={require("../images/istanbul.jpg")}/>
-        </div>
-        <div>
-        <City src={require("../images/kathmandu.jpg")}/>
-        </div>
-        <div>
-        <City src={require("../images/lisbon.jpg")}/>
-        </div>
-        <div>
-        <City src={require("../images/london.jpg")}/>
-        </div>
-        <div>
-        <City src={require("../images/paris.jpg")}/>
-        </div>
-        <div>
-        <City src={require("../images/rio.jpg")}/>
-        </div>
-        <div>
-        <City src={require("../images/sanFran.jpg")}/>
-        </div>
-        <div>
-        <City src={require("../images/singapore.jpg")}/>
-        </div>
-        <div>
-        <City src={require("../images/sydney.jpg")}/>
-        </div>
-      </Slider>
-    </div>
-  );
-}
+    return (
+      <div>
+        <Slider {...settings}>
+          <div>
+            <City src={require("../images/bali.jpg")} />
+          </div>
+          <div>
+            <City src={require("../images/barcelona.jpg")} />
+          </div>
+          <div>
+            <City src={require("../images/beijing.jpg")} />
+          </div>
+          <div>
+            <City src={require("../images/istanbul.jpg")} />
+          </div>
+          <div>
+            <City src={require("../images/kathmandu.jpg")} />
+          </div>
+          <div>
+            <City src={require("../images/lisbon.jpg")} />
+          </div>
+          <div>
+            <City src={require("../images/london.jpg")} />
+          </div>
+          <div>
+            <City src={require("../images/paris.jpg")} />
+          </div>
+          <div>
+            <City src={require("../images/rio.jpg")} />
+          </div>
+          <div>
+            <City src={require("../images/sanFran.jpg")} />
+          </div>
+          <div>
+            <City src={require("../images/singapore.jpg")} />
+          </div>
+          <div>
+            <City src={require("../images/sydney.jpg")} />
+          </div>
+        </Slider>
+      </div>
+    );
+  }
 }
 
 export default CitySlider;
