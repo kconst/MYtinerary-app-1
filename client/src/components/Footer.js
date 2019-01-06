@@ -1,15 +1,15 @@
 import React from "react";
-import styled from "styled-components";
+// import styled from "styled-components";
 
-const HomeIcon = styled.img`
+// const HomeIcon = styled.img`
   
-  width: 15%;
-  height: 5%;
-`;
+//   width: 15%;
+//   height: 5%;
+// `;
 const Footer = () => {
   return (
     <div>
-      <HomeIcon src={require("../images/homeIcon.png")} alt={"home icon"} />
+      <img src={require("../images/homeIcon.png")} alt={"home icon"} />
     </div>
   );
 };

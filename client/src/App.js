@@ -5,7 +5,8 @@ import Cities from "./components/Cities";
 // import Error from "./components/Error";
 import Login from "./components/Header/Login";
 import SignUp from "./components/Header/SignUp";
-// import Hello from "./components/helloWorld";
+import Header from "./components/Header";
+
 class App extends Component {
     // state = {
     //   response: "",
@@ -59,7 +60,7 @@ class App extends Component {
             <button type="submit">Submit</button>
           </form>
           <p>{this.state.responseToPost}</p> */}
-          {/* <Hello /> */}
+          <Header/>
           <Route exact path="/" component={Home} />
           <Route path="/cities" component={Cities} />
           <Route path="/login" component={Login} />
