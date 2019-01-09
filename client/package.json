@@ -11,6 +11,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-animated-slider": "^1.1.4",
+    "react-debounce-input": "^3.2.0",
     "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
@@ -30,7 +31,6 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "typings": "dist/src/index.d.ts",
   "browserslist": [
     ">0.2%",
     "not dead",
@@ -40,5 +40,4 @@
   "devDependencies": {
     "jquery": "^3.3.1"
   }
-  
 }

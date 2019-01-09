@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 
+
 class Home extends Component {
   render() {
     return (
@@ -27,9 +28,6 @@ class Home extends Component {
         </div>
         <div className="TextWrapper">
           <p>Want to build your own MYtinerary?</p>
-        </div>
-        <div className="FooterWrapper">
-          <img src={require("../images/homeIcon.png")} alt={"home icon"} />
         </div>
       </Fragment>
     );

@@ -6,6 +6,7 @@ import Cities from "./components/Cities";
 import Login from "./components/Header/Login";
 import SignUp from "./components/Header/SignUp";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 class App extends Component {
     // state = {
@@ -60,11 +61,13 @@ class App extends Component {
             <button type="submit">Submit</button>
           </form>
           <p>{this.state.responseToPost}</p> */}
+          
           <Header/>
           <Route exact path="/" component={Home} />
           <Route path="/cities" component={Cities} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
+          <Footer/>
           {/* <Route component = {Error}/> */}
         </div>
       </BrowserRouter>

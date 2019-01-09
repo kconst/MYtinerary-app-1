@@ -1,8 +1,104 @@
 const express = require("express");
 const router = express.Router();
 const City = require("../models/city.model");
+const Itinerary = require("../models/itinerary.model");
 const bodyParser = require("body-parser");
 
+//require for file upload
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+const upload = multer({ storage: storage });
+
+// get cities from mlab
+router.get("/cities", (req, res) => {
+  City.find().then(cities => res.send(cities));
+});
+
+//get each city by id
+router.get("/cities/:name", (req, res) => {
+  City.find({name: req.params.name}).then(result => res.send(result));
+});
+
+//populate cities with itneraries
+// router.get("/cities", (req, res, next) => {
+//       City.find()
+//         .populate("itineraries")
+//         .exec(function(error, entries) {
+//           res.send(cities);
+//         })
+// });
+
+//post city onto mlab
+router.post("/addCity", function(req, res) {
+  var city = new City(req.body);
+  console.log(req.body);
+  city
+    .save(req.body)
+    .then(item => {
+      res.send("item added successfully");
+    })
+    .catch(err => {
+      res.status(400).send("unable to save to database");
+    });
+});
+
+//post itinerary
+router.post("/addPost", upload.single("userImage"), (req, res) => {
+  // console.log(req.file.path)
+  const itinerary = new Itinerary({
+    userImage: req.file.path,
+    title: req.body.title,
+    userName: req.body.userName,
+    userRating: req.body.userRating,
+    duration: req.body.duration,
+    cost: req.body.cost,
+    hashtags: req.body.hashtags,
+    name: req.body.name
+  });
+  itinerary.save().then(result => {
+    console.log(result);
+    res.send("post added successfully");
+  });
+});
+
+//get itineraries
+router.get("/itinerary", (req, res) => {
+  Itinerary.find()
+  .populate("cities").exec()
+  .then(result => res.send(result));
+});
+
+//get itineraries by city
+router.get("/itinerary/:city_id", (req, res) => {
+  Itinerary.find({city_id: req.params.city_id})
+  .then(result => res.send(result));
+});
+
+//store an img in binary
+// var imgPath = "./client/src/images/GaudiLover.png";
+// var itinerary = new Itinerary();
+// itinerary.userImage.data = fs.readFileSync(imgPath);
+// itinerary.userImage.contentType = "image/png";
+// itinerary.save(function(err, itinerary) {
+//   if (err) throw err;
+//   console.log("save img to mongo");
+
+// router.get("/entry", function(req, res, next) {
+//   Itinerary.findById(itinerary, function(err, doc) {
+//     if (err) return next(err);
+//     res.contentType(doc.userImage.contentType);
+//     res.send(doc.userImage.data);
+//   });
+// });
+// })
 //create a middleware called myLogger
 // var myLogger = function(req, res, next) {
 //   req.myLogger = "Logged";
@@ -41,30 +137,6 @@ const bodyParser = require("body-parser");
 //   res.send(responseText);
 // });
 
-//get cities from mlab and post on mlab
-router.get("/cities", (req, res) => {
-  City.find().then(cities => res.send(cities));
-  
-});
-
-//post city onto mlab
-// router.post("/addCity", function(req, res) {
-//   city.create(req.body)
-  
-//   var city = new City({
-//     name: req.body.name,
-//     country: req.body.country
-//   });
-  // console.log(req.body.name);
-  // console.log(req.body.country);
-
-//   city.save(function(err) {
-//     if (err) {
-//       return next(err);
-//     }
-//     res.send("City added successfully");
-//   });
-// });
 // City.create(req.body, function(err, city) {
 //   if (err) {
 //     console.log(err);
@@ -88,18 +160,3 @@ router.get("/cities", (req, res) => {
 // });
 
 module.exports = router;
-
-// Require the controllers
-// const city_controller = require("../controllers/city.controller");
-
-// a simple test url to check that all of our files are communicating correctly
-// router.get("/test", city_controller.test);
-
-// get a list of cities
-// router.get("/cities", city_controller.get_cities);
-
-//add a city
-// router.post("/addcity", city_controller.add_city);
-
-//post something
-// router.post("/world", city_controller.world);

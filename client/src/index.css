@@ -20,6 +20,17 @@ justify-content: space-between;
 margin: 20px;
 }
 
+/* ----------footer----------- */
+.FooterWrapper img {
+  width: 55px;
+  height: 55px;
+}
+
+.FooterWrapper {
+   margin-top: 40px;
+   text-align: center;
+}
+
 /*---------- Landing page ----------*/
 .LogoWrapper {
   text-align: center;
@@ -37,16 +48,6 @@ margin: 20px;
 
 .ArrowWrapper {
   text-align: center;
-}
-
-.FooterWrapper img {
-  width: 55px;
-  height: 55px;
-}
-
-.FooterWrapper {
-   margin-top: 40px;
-   text-align: center;
 }
 
 .TextWrapper {

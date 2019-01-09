@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { getCities } from "../actions/citiesActions";
 import PropTypes from "prop-types";
-// import {Search} from "@material-ui/icons";
+import {DebounceInput} from 'react-debounce-input';
 
 // import Hello from "./helloWorld";
 // import City from "./City"
@@ -37,22 +37,21 @@ class Cities extends Component {
           <div className="nav-wrapper">
             <form>
               <div className="input-field">
-                <input
+                <DebounceInput
+                  debounceTimeout={200}
                   type="search"
                   placeholder="Enter city name"
                   value={this.state.search}
                   onChange={this.updateSearch.bind(this)}
                 />
-                <label className="label-icon" for="search">
-               
+                <label className="label-icon">
                   <i className="material-icons search">search</i>
-               
                 </label>
               </div>
             </form>
           </div>
         </nav>
-        <container className="cityList">
+        <div className="cityList">
           {filteredCities.map(city => {
             return (
               <div key={city._id} className="city">
@@ -62,7 +61,7 @@ class Cities extends Component {
               </div>
             );
           })}
-        </container>
+        </div>
       </Fragment>
     );
   }
