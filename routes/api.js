@@ -1,14 +1,16 @@
-const express = require("express");
-const router = express.Router();
-const City = require("../models/city.model");
-const Itinerary = require("../models/itinerary.model");
-const Activity = require("../models/activity.model");
-const bodyParser = require("body-parser");
+import { Router } from "express";
+const router = Router();
+import City, { find } from "../models/city.model";
+import Itinerary, { find as _find } from "../models/itinerary.model";
+import Activity, { find as __find } from "../models/activity.model";
+import Comment from "../models/comment.model";
+import bodyParser from "body-parser";
 
 //require for file upload
-const multer = require("multer");
+import multer, { diskStorage } from "multer";
 
-const storage = multer.diskStorage({
+//where to store posted images
+const storage = diskStorage({
   destination: function(req, file, cb) {
     cb(null, "./uploads");
   },
@@ -20,22 +22,13 @@ const upload = multer({ storage: storage });
 
 // get cities from mlab
 router.get("/cities", (req, res) => {
-  City.find().then(cities => res.send(cities));
+  find().then(cities => res.send(cities));
 });
 
 //get each city by city name
 router.get("/cities/:city", (req, res) => {
-  City.find({ city: req.params.city }).then(result => res.send(result));
+  find({ city: req.params.city }).then(result => res.send(result));
 });
-
-//populate cities with itneraries
-// router.get("/cities", (req, res, next) => {
-//       City.find()
-//         .populate("itineraries")
-//         .exec(function(error, entries) {
-//           res.send(cities);
-//         })
-// });
 
 //post city onto mlab
 router.post("/addCity", function(req, res) {
@@ -63,7 +56,7 @@ router.post("/addPost", upload.single("userImage"), (req, res) => {
     cost: req.body.cost,
     hashtags: req.body.hashtags,
     city: req.body.city,
-    id:req.body.id
+    id: req.body.id
   });
   itinerary.save().then(result => {
     console.log(result);
@@ -73,7 +66,7 @@ router.post("/addPost", upload.single("userImage"), (req, res) => {
 
 //get itineraries
 router.get("/itineraries", (req, res) => {
-  Itinerary.find()
+  _find()
     // .populate("cities").exec()
     .then(result => res.send(result));
 });
@@ -81,13 +74,13 @@ router.get("/itineraries", (req, res) => {
 // get itineraries by city
 router.get("/itineraries/:city", (req, res) => {
   const city = req.params.city;
-  Itinerary.find({city}).then(result => res.send(result));
+  _find({ city }).then(result => res.send(result));
 });
 
 //get activities of specific itinerary by id
 router.get("/activities/:id", (req, res) => {
   const id = req.params.id;
-  Activity.find({id})
+  __find({ id })
     // .populate("cities").exec()
     .then(result => res.send(result));
 });
@@ -108,9 +101,17 @@ router.post("/addActivity", upload.single("activityImage"), (req, res) => {
   });
 });
 
+//post comment
+router.post("/postComment", (req, res) => {
+  var comment = new Comment(req.body);
+  comment.create(req.body).then(result => {
+    console.log(result);
+    res.send("comment added");
+  });
+});
 
+export default router;
 
-module.exports = router;
 //store an img in binary
 // var imgPath = "./client/src/images/GaudiLover.png";
 // var itinerary = new Itinerary();
@@ -186,4 +187,12 @@ module.exports = router;
 
 // router.post("/contact", (req, res) => {
 //   res.send("This is the contact page with a POST request");
+// });
+//populate cities with itneraries
+// router.get("/cities", (req, res, next) => {
+//       City.find()
+//         .populate("itineraries")
+//         .exec(function(error, entries) {
+//           res.send(cities);
+//         })
 // });
