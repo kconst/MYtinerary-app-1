@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 //create city schema & model
 const CitySchema = new Schema({
-  name: String,
+  city: String,
   country: String
 });
 

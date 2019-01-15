@@ -5,7 +5,9 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-app.use(express.static("uploads"));
+
+app.use("/itineraries/:city", express.static("uploads"));
+app.use("/itineraries/:id", express.static("uploads"));
 
 //import routes
 const routes = require("./routes/api");

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const City = require("../models/city.model");
 const Itinerary = require("../models/itinerary.model");
+const Activity = require("../models/activity.model");
 const bodyParser = require("body-parser");
 
 //require for file upload
@@ -22,9 +23,9 @@ router.get("/cities", (req, res) => {
   City.find().then(cities => res.send(cities));
 });
 
-//get each city by id
-router.get("/cities/:name", (req, res) => {
-  City.find({name: req.params.name}).then(result => res.send(result));
+//get each city by city name
+router.get("/cities/:city", (req, res) => {
+  City.find({ city: req.params.city }).then(result => res.send(result));
 });
 
 //populate cities with itneraries
@@ -61,7 +62,8 @@ router.post("/addPost", upload.single("userImage"), (req, res) => {
     duration: req.body.duration,
     cost: req.body.cost,
     hashtags: req.body.hashtags,
-    name: req.body.name
+    city: req.body.city,
+    id:req.body.id
   });
   itinerary.save().then(result => {
     console.log(result);
@@ -70,18 +72,45 @@ router.post("/addPost", upload.single("userImage"), (req, res) => {
 });
 
 //get itineraries
-router.get("/itinerary", (req, res) => {
+router.get("/itineraries", (req, res) => {
   Itinerary.find()
-  .populate("cities").exec()
-  .then(result => res.send(result));
+    // .populate("cities").exec()
+    .then(result => res.send(result));
 });
 
-//get itineraries by city
-router.get("/itinerary/:city_id", (req, res) => {
-  Itinerary.find({city_id: req.params.city_id})
-  .then(result => res.send(result));
+// get itineraries by city
+router.get("/itineraries/:city", (req, res) => {
+  const city = req.params.city;
+  Itinerary.find({city}).then(result => res.send(result));
 });
 
+//get activities of specific itinerary by id
+router.get("/activities/:id", (req, res) => {
+  const id = req.params.id;
+  Activity.find({id})
+    // .populate("cities").exec()
+    .then(result => res.send(result));
+});
+
+//post activities
+router.post("/addActivity", upload.single("activityImage"), (req, res) => {
+  // console.log(req.file.path)
+  const activity = new Activity({
+    activityImage: req.file.path,
+    activityCaption: req.body.activityCaption,
+    title: req.body.title,
+    city: req.body.city,
+    id: req.body.id
+  });
+  activity.save().then(result => {
+    console.log(result);
+    res.send("post added successfully");
+  });
+});
+
+
+
+module.exports = router;
 //store an img in binary
 // var imgPath = "./client/src/images/GaudiLover.png";
 // var itinerary = new Itinerary();
@@ -158,5 +187,3 @@ router.get("/itinerary/:city_id", (req, res) => {
 // router.post("/contact", (req, res) => {
 //   res.send("This is the contact page with a POST request");
 // });
-
-module.exports = router;

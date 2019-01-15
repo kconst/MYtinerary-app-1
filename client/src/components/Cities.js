@@ -2,7 +2,8 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { getCities } from "../actions/citiesActions";
 import PropTypes from "prop-types";
-import {DebounceInput} from 'react-debounce-input';
+import { DebounceInput } from "react-debounce-input";
+import { Link } from "react-router-dom";
 
 // import Hello from "./helloWorld";
 // import City from "./City"
@@ -26,9 +27,9 @@ class Cities extends Component {
   }
 
   render() {
-    console.log(this.props);
-    let filteredCities = this.props.cities.cities.filter(city => {
-      return city.name.toLowerCase().includes(this.state.search);
+    // console.log(this.props);
+    let filteredCities = this.props.cities.cities.filter(result => {
+      return result.city.toLowerCase().includes(this.state.search);
     });
 
     return (
@@ -51,17 +52,21 @@ class Cities extends Component {
             </form>
           </div>
         </nav>
-        <div className="cityList">
-          {filteredCities.map(city => {
-            return (
-              <div key={city._id} className="city">
-                <span>
-                  {city.name}, {city.country}
-                </span>
-              </div>
-            );
-          })}
-        </div>
+        
+          <div className="cityList">
+            {filteredCities.map(city => {
+              return (
+                <div key={city.city} className="city">
+                  <Link to = {`/itineraries/${city.city}`} >
+                  <span>
+                    {city.city}, {city.country}
+                  </span>
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        
       </Fragment>
     );
   }
