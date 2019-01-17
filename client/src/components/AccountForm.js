@@ -103,6 +103,18 @@ class AccountForm extends Component {
                   />
                 </div>
               </div>
+              <div className="input-wrapper">
+                <div className="label-text">
+                  <label htmlFor="country">Country</label>
+                </div>
+                <div className="input-text">
+                  <select
+                    name="country"
+                    onChange={props.handleChange}
+                    value={props.values.country}
+                  />
+                </div>
+              </div>
             </Form>
           )}
         />
