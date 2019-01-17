@@ -15,9 +15,9 @@ code {
 
 /* --------header---------- */
 .HeaderWrapper {
-display: flex;
-justify-content: space-between;
-margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
 }
 
 /* ----------footer----------- */
@@ -27,8 +27,8 @@ margin: 20px;
 }
 
 .FooterWrapper {
-   margin-top: 40px;
-   text-align: center;
+  margin-top: 40px;
+  text-align: center;
 }
 
 /*---------- Landing page ----------*/
@@ -38,12 +38,12 @@ margin: 20px;
 
 .LogoWrapper img {
   width: 80%;
-   height: 5%;
+  height: 5%;
 }
 
 .ArrowWrapper img {
   width: 100px;
- height: 100px;
+  height: 100px;
 }
 
 .ArrowWrapper {
@@ -88,10 +88,10 @@ i.material-icons.search {
 }
 
 .city {
-height: 40px;
-line-height: 40px;
-margin: 10px 50px;
-background-color: lightgray;
+  height: 40px;
+  line-height: 40px;
+  margin: 10px 50px;
+  background-color: lightgray;
 }
 
 /* -----------itinerary----------- */
@@ -108,11 +108,11 @@ background-color: lightgray;
   /* flex-direction: column; */
 }
 
-.itinerary img {
+.profile-figure img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-object-fit: cover;
+  object-fit: cover;
 }
 
 .itinerary figcaption {
@@ -121,6 +121,23 @@ object-fit: cover;
 
 .profile-figure {
   height: 60px;
+  width: 100px;
+}
+
+.itinerary-wrapper {
+  display: flex;
+}
+
+.itinerary-container {
+  margin: 10px 10px;
+  border: 1px solid black;
+}
+
+.itinerary-text-inner button {
+  background-color: white;
+  color: black;
+  text-align: left;
+  width: 100px;
 }
 
 .itinerary-text-wrapper h5 {
@@ -131,32 +148,63 @@ object-fit: cover;
 
 .itinerary-text-inner {
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 }
 
 .itinerary-text-inner p {
   margin: 5px 10px;
   padding: 0px 0px;
 }
+*/
 
 /* ----------activity carousel --------- */
-/* .Slider {
+.Slider {
   display: flex;
   flex-direction: row;
-} */
+}
+
+.carousel {
+  width: 400px;
+}
 
 .slick-list {
-height: 100px;
+  height: 100px;
 }
 
-.slick-slider {
-  width:100%;
-  
+.slick-track {
+  height: 100px;
+  width: 400px;
+  z-index: 1000;
+}
+.slick-slider.slick-initialized {
+  width: 80%;
+
+  margin: auto;
 }
 
-.slider img {
+/* .slider img {
   width: 80px;
     height: 50px;
-}
+} */
 
 /* .button.slick */
+
+/* --------------Account create form --------------- */
+
+.account-create {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.label-text {
+  width: 20%;
+}
+.input-text {
+  width: 50%;
+  border: 1px solid black;
+  text-align: center;
+}

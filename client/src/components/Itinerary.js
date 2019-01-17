@@ -2,16 +2,13 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { getItinerary } from "../actions/itineraryActions";
 import PropTypes from "prop-types";
-
-import CommentForm from "./Comment";
 import Activity from "./Activity";
-import { EventEmitter } from "events";
 
 class Itinerary extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itineraries: [],
+      //itineraries: [],
       showComponent: ""
     };
     this.handleToggle = this.handleToggle.bind(this);
@@ -33,14 +30,16 @@ class Itinerary extends Component {
   }
 
   render() {
+    //console.log('i am the state' + this.state.itineraries)
+    //console.log('i am the props' + this.props.itineraries)
     const { itineraries } = this.props.itineraries;
     return (
       <Fragment>
         {itineraries.map(result => {
           return (
-            <Fragment key={result._id}>
-              <div className="itinearary-container">
-                <div className="itinerary">
+            <div className="itinerary-container">
+              <Fragment key={result._id}>
+                <div className="itinerary-wrapper">
                   <div className="profile-figure">
                     <img
                       className="profileImage"
@@ -49,31 +48,34 @@ class Itinerary extends Component {
                     />
                     <figcaption>{result.userName}</figcaption>
                   </div>
-                  <div>
-                    <div className="itinerary-text-wrapper">
-                      <div className="itinerary-text-outer">
-                        <h5>{result.title}</h5>
-                      </div>
-                      <div className="itinerary-text-inner">
-                        <p>Likes: {result.userRating}</p>
-                        <p>Duration: {result.duration}</p>
-                        <p>Cost: {result.cost}</p>
-                        <p>Hashtags: {result.hashtags}</p>
-
-                        <button id={result._id} onClick={this.handleToggle}>
-                          View
-                          <div>
-                            {this.state.showComponent == result._id ? (
-                              <Activity id={result._id} />
-                            ) : null}
-                          </div>
-                        </button>
-                      </div>
+                  <div class="itinerary-text-wrapper">
+                    <div className="itinerary-text-outer">
+                      <h5>{result.title}</h5>
+                    </div>
+                    <div className="itinerary-text-inner">
+                      <p>Likes: {result.userRating}</p>
+                      <p>Duration: {result.duration}</p>
+                      <p>Cost: {result.cost}</p>
+                      <p>Hashtags: {result.hashtags}</p>
                     </div>
                   </div>
+                 
                 </div>
-              </div>
-            </Fragment>
+                <div>
+                    <button
+                      className="view"
+                      id={result._id}
+                      onClick={this.handleToggle}
+                    >
+                      View
+                    </button>
+
+                    {this.state.showComponent === result._id ? (
+                      <Activity id={result._id} />
+                    ) : null}
+                  </div>
+              </Fragment>
+            </div>
           );
         })}
       </Fragment>

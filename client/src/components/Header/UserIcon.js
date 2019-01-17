@@ -13,20 +13,18 @@ class UserIcon extends Component {
     return (
       <div className="user">
         {/* <!-- Modal Trigger --> */}
-          <i data-target="modal1" className="material-icons modal-trigger medium">
-            account_circle
-          </i>
+        <i data-target="modal1" className="material-icons modal-trigger medium">
+          account_circle
+        </i>
 
         {/* <!-- Modal Structure --> */}
         <div id="modal1" className="modal">
           <ul className="modal-content">
-            <NavLink to="/signup">Create Account</NavLink>
+            <NavLink to="/accountCreate">Create Account</NavLink>
             <NavLink to="/login">Login</NavLink>
           </ul>
           <div className="modal-footer">
-            <button className="modal-close">
-              Close
-            </button>
+            <button className="modal-close">Close</button>
           </div>
         </div>
       </div>

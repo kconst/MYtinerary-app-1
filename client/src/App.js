@@ -8,7 +8,7 @@ import SignUp from "./components/Header/SignUp";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Itinerary from "./components/Itinerary";
-import Activity from "./components/Activity";
+import AccountForm from "./components/AccountForm";
 
 class App extends Component {
   render() {
@@ -21,7 +21,8 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
           <Route path="/itineraries/:city" component={Itinerary} />
-          <Route path="/itineraries/:id" component={Activity} />
+          <Route path="/accountCreate" component={AccountForm} />
+          {/* <Route path="/itineraries/:itinerary_id" component={Activity} /> */}
           <Footer />
           {/* <Route component = {Error}/> */}
         </div>
@@ -67,8 +68,7 @@ export default App;
 //     console.log(response);
 //   };
 
-{
-  /* <p>{this.state.response}</p>
+/* <p>{this.state.response}</p>
           <form onSubmit={this.handleSubmit}> 
             <p>
               <strong>Post to Server:</strong>
@@ -81,4 +81,3 @@ export default App;
             <button type="submit">Submit</button>
           </form>
           <p>{this.state.responseToPost}</p> */
-}

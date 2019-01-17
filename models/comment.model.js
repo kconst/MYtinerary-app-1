@@ -1,13 +1,13 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 //create comment schema
-const commentSchema = new Schema({
+const CommentSchema = new Schema({
   userName: String,
   comment: String,
   city: String,
   title: String,
-  id: mongoose.Schema.Types.ObjectId
+  itinerary_id: mongoose.Schema.Types.ObjectId
 });
 
 module.exports = mongoose.model("Comment", CommentSchema);

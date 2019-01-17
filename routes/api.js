@@ -1,16 +1,15 @@
-import { Router } from "express";
-const router = Router();
-import City, { find } from "../models/city.model";
-import Itinerary, { find as _find } from "../models/itinerary.model";
-import Activity, { find as __find } from "../models/activity.model";
-import Comment from "../models/comment.model";
-import bodyParser from "body-parser";
+const express = require("express");
+const router = express.Router();
+const City = require("../models/city.model");
+const Itinerary = require("../models/itinerary.model");
+const Activity = require("../models/activity.model");
+const Comment = require("../models/comment.model");
+const bodyParser = require("body-parser");
 
 //require for file upload
-import multer, { diskStorage } from "multer";
+const multer = require("multer");
 
-//where to store posted images
-const storage = diskStorage({
+const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, "./uploads");
   },
@@ -22,13 +21,22 @@ const upload = multer({ storage: storage });
 
 // get cities from mlab
 router.get("/cities", (req, res) => {
-  find().then(cities => res.send(cities));
+  City.find().then(cities => res.send(cities));
 });
 
 //get each city by city name
 router.get("/cities/:city", (req, res) => {
-  find({ city: req.params.city }).then(result => res.send(result));
+  City.find({ city: req.params.city }).then(result => res.send(result));
 });
+
+//populate cities with itneraries
+// router.get("/cities", (req, res, next) => {
+//       City.find()
+//         .populate("itineraries")
+//         .exec(function(error, entries) {
+//           res.send(cities);
+//         })
+// });
 
 //post city onto mlab
 router.post("/addCity", function(req, res) {
@@ -55,8 +63,7 @@ router.post("/addPost", upload.single("userImage"), (req, res) => {
     duration: req.body.duration,
     cost: req.body.cost,
     hashtags: req.body.hashtags,
-    city: req.body.city,
-    id: req.body.id
+    city: req.body.city
   });
   itinerary.save().then(result => {
     console.log(result);
@@ -66,7 +73,7 @@ router.post("/addPost", upload.single("userImage"), (req, res) => {
 
 //get itineraries
 router.get("/itineraries", (req, res) => {
-  _find()
+  Itinerary.find()
     // .populate("cities").exec()
     .then(result => res.send(result));
 });
@@ -74,13 +81,13 @@ router.get("/itineraries", (req, res) => {
 // get itineraries by city
 router.get("/itineraries/:city", (req, res) => {
   const city = req.params.city;
-  _find({ city }).then(result => res.send(result));
+  Itinerary.find({ city }).then(result => res.send(result));
 });
 
 //get activities of specific itinerary by id
 router.get("/activities/:id", (req, res) => {
-  const id = req.params.id;
-  __find({ id })
+  const itinerary_id = req.params.id;
+  Activity.find({ itinerary_id })
     // .populate("cities").exec()
     .then(result => res.send(result));
 });
@@ -93,7 +100,7 @@ router.post("/addActivity", upload.single("activityImage"), (req, res) => {
     activityCaption: req.body.activityCaption,
     title: req.body.title,
     city: req.body.city,
-    id: req.body.id
+    itinerary_id: req.body.itinerary_id
   });
   activity.save().then(result => {
     console.log(result);
@@ -101,16 +108,31 @@ router.post("/addActivity", upload.single("activityImage"), (req, res) => {
   });
 });
 
-//post comment
+// post comment
 router.post("/postComment", (req, res) => {
-  var comment = new Comment(req.body);
-  comment.create(req.body).then(result => {
+  const comment = new Comment({
+    title: req.body.title,
+    city: req.body.city,
+    itinerary_id: req.body.itinerary_id,
+    comment: req.body.comment,
+    userName: req.body.userName
+  });
+  comment.save().then(result => {
     console.log(result);
-    res.send("comment added");
+    res.status(200).json(result);
   });
 });
 
-export default router;
+//get comment
+router.get("/postComment/:id", (req, res) => {
+  
+  const itinerary_id = req.params.id;
+  Comment.find({itinerary_id :itinerary_id }).then(result => res.json(result));
+
+});
+
+// {itinerary_id}
+module.exports = router;
 
 //store an img in binary
 // var imgPath = "./client/src/images/GaudiLover.png";

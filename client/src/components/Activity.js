@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import CommentForm from "./PostComment";
+import CommentList from "./FetchComment";
 
 // import M from "materialize-css/dist/js/materialize.min.js";
 // import "materialize-css/dist/css/materialize.min.css";
@@ -22,8 +24,8 @@ class Activity extends Component {
 
   componentDidMount() {
     console.log(this.props);
-    const id = this.props.id;
-    this.props.getActivity(id);
+    const itinerary_id = this.props.id;
+    this.props.getActivity(itinerary_id);
   }
 
   render() {
@@ -42,13 +44,22 @@ class Activity extends Component {
         <Slider {...settings}>
           {activity.map(result => {
             return (
-              <a className="slider" key={result._id}>
-                <img src={result.activityImage} alt="" />
-                <figcaption>{result.activityCaption}</figcaption>
-              </a>
+              <Fragment key={result._id}>
+                <a className="slider">
+                  <img src={result.activityImage} alt="" />
+                  <figcaption>{result.activityCaption}</figcaption>
+                </a>
+              </Fragment>
+              
             );
           })}
         </Slider>
+        <CommentForm itinerary_id={this.props.id}>   
+     
+        </CommentForm> 
+     
+       
+     
       </Fragment>
     );
   }
