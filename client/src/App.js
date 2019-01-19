@@ -8,7 +8,7 @@ import SignUp from "./components/Header/SignUp";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Itinerary from "./components/Itinerary";
-import AccountForm from "./components/AccountForm";
+import AccountForm from "./components/AccountForm2";
 
 class App extends Component {
   render() {

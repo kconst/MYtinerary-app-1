@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 
 app.use("/itineraries/:city", express.static("uploads"));
 app.use("/activities/:id", express.static("uploads"));
+app.use("/createAccount", express.static("uploads"));
 
 //import routes
 const routes = require("./routes/api");

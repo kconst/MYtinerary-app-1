@@ -4,6 +4,7 @@ const City = require("../models/city.model");
 const Itinerary = require("../models/itinerary.model");
 const Activity = require("../models/activity.model");
 const Comment = require("../models/comment.model");
+const Account = require("../models/account.model");
 const bodyParser = require("body-parser");
 
 //require for file upload
@@ -18,6 +19,8 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage: storage });
+
+//---------cities page---------------
 
 // get cities from mlab
 router.get("/cities", (req, res) => {
@@ -52,6 +55,20 @@ router.post("/addCity", function(req, res) {
     });
 });
 
+//--------------itinerary page --------------------------
+//get itineraries
+router.get("/itineraries", (req, res) => {
+  Itinerary.find()
+    // .populate("cities").exec()
+    .then(result => res.send(result));
+});
+
+// get itineraries by city
+router.get("/itineraries/:city", (req, res) => {
+  const city = req.params.city;
+  Itinerary.find({ city }).then(result => res.send(result));
+});
+
 //post itinerary
 router.post("/addPost", upload.single("userImage"), (req, res) => {
   // console.log(req.file.path)
@@ -71,18 +88,7 @@ router.post("/addPost", upload.single("userImage"), (req, res) => {
   });
 });
 
-//get itineraries
-router.get("/itineraries", (req, res) => {
-  Itinerary.find()
-    // .populate("cities").exec()
-    .then(result => res.send(result));
-});
-
-// get itineraries by city
-router.get("/itineraries/:city", (req, res) => {
-  const city = req.params.city;
-  Itinerary.find({ city }).then(result => res.send(result));
-});
+//-------------activities page ----------------------
 
 //get activities of specific itinerary by id
 router.get("/activities/:id", (req, res) => {
@@ -108,6 +114,7 @@ router.post("/addActivity", upload.single("activityImage"), (req, res) => {
   });
 });
 
+//-----------comment page --------------------
 // post comment
 router.post("/postComment", (req, res) => {
   const comment = new Comment({
@@ -123,15 +130,34 @@ router.post("/postComment", (req, res) => {
   });
 });
 
-//get comment
+//get comment specific to itinerary id
 router.get("/postComment/:id", (req, res) => {
-  
   const itinerary_id = req.params.id;
-  Comment.find({itinerary_id :itinerary_id }).then(result => res.json(result));
-
+  Comment.find({ itinerary_id: itinerary_id }).then(result => res.json(result));
 });
 
-// {itinerary_id}
+// -----create user account----------------------
+
+//post user details and create account
+router.post("/createAccount", (req, res) => {
+
+  console.log(req.body)
+  const account = new Account({
+    // userImage: req.file.path,
+    userName: req.body.user.userName,
+    firstName: req.body.user.firstName,
+    lastName: req.body.user.lastName,
+    email: req.body.user.email,
+    password: req.body.user.password
+    // country: req.body.country
+  });
+  account.save().then(result => {
+    console.log(result);
+    res.json(result);
+    
+  });
+});
+
 module.exports = router;
 
 //store an img in binary

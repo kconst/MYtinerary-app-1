@@ -191,7 +191,7 @@ i.material-icons.search {
 
 /* --------------Account create form --------------- */
 
-.account-create {
+.account-container {
   display: flex;
   flex-direction: column;
 }
@@ -204,7 +204,23 @@ i.material-icons.search {
   width: 20%;
 }
 .input-text {
-  width: 50%;
+  width: 70%;
   border: 1px solid black;
   text-align: center;
+}
+
+.createAccount,
+.accountPageHead,
+.accountAgree {
+  text-align: center;
+}
+
+.account-avatar {
+  text-align: center;
+  margin: 10px 0px;
+}
+
+.account-avatar img {
+  height: 100px;
+  width: 100px;
 }

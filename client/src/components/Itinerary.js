@@ -24,6 +24,7 @@ class Itinerary extends Component {
   handleToggle(event) {
     event.preventDefault();
     console.log(event.target.id);
+    
     this.setState({
       showComponent: event.target.id
     });
