@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import CommentForm from "./PostComment";
-import CommentList from "./FetchComment";
+// import CommentList from "./FetchComment";
 
 // import M from "materialize-css/dist/js/materialize.min.js";
 // import "materialize-css/dist/css/materialize.min.css";

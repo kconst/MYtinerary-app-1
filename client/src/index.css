@@ -196,17 +196,46 @@ i.material-icons.search {
   flex-direction: column;
 }
 
-.input-wrapper {
+.errorMsg {
+  text-align: center;
+}
+
+/* form label,
+form input {
+  display: block;
+}
+
+form input {
+  padding: 10px;
+  border: solid 1px #bdc7d8;
+} */
+
+.form-group {
   display: flex;
   justify-content: center;
+  height: 30px;
+  margin: 5px 0px;
 }
 .label-text {
   width: 20%;
 }
+
 .input-text {
   width: 70%;
   border: 1px solid black;
   text-align: center;
+}
+
+.form-group .input-text input[type="text"],
+.form-group .input-text input[type="email"],
+.form-group .input-text input[type="password"] {
+  border: none;
+}
+
+.form-group .input-text input[type="text"]:focus,
+.form-group .input-text input[type="email"]:focus,
+.form-group .input-text input[type="password"]:focus {
+  border: none;
 }
 
 .createAccount,
@@ -223,4 +252,32 @@ i.material-icons.search {
 .account-avatar img {
   height: 100px;
   width: 100px;
+}
+
+.css-vj8t7z,
+.css-1hwfws3 {
+  height: 30px;
+}
+
+/* --------login form */
+.form-group {
+  display: flex;
+  justify-content: center;
+  height: 30px;
+  margin: 5px 0px;
+}
+
+.createLogin,
+.loginPageHead {
+  text-align: center;
+}
+
+.check,
+.login-text {
+  margin: 20px;
+}
+
+/*  ----------form validity----------- */
+input:invalid {
+  border-color: red;
 }

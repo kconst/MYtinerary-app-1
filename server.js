@@ -20,6 +20,7 @@ mongoose.connect(
   mongoDB,
   { useNewUrlParser: true }
 );
+mongoose.set("useCreateIndex", true);
 
 mongoose.Promise = global.Promise; //WHAT IS THIS????
 const connection = mongoose.connection;
@@ -48,7 +49,7 @@ connection.on("error", function(error) {
 // });
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
 //set up routes
 app.use("/api", routes);

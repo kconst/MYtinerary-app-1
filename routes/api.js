@@ -1,11 +1,18 @@
+require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const City = require("../models/city.model");
 const Itinerary = require("../models/itinerary.model");
 const Activity = require("../models/activity.model");
 const Comment = require("../models/comment.model");
-const Account = require("../models/account.model");
+const bcrypt = require("bcryptjs");
+const User = require("../models/user.model");
+const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
+const { check, validationResult } = require("express-validator/check");
+
+// const Login = require("../models/login.model");
+// const { body } = require("express-validator/check");
 
 //require for file upload
 const multer = require("multer");
@@ -73,10 +80,10 @@ router.get("/itineraries/:city", (req, res) => {
 router.post("/addPost", upload.single("userImage"), (req, res) => {
   // console.log(req.file.path)
   const itinerary = new Itinerary({
-    userImage: req.file.path,
+    userimage: req.file.path,
     title: req.body.title,
-    userName: req.body.userName,
-    userRating: req.body.userRating,
+    username: req.body.username,
+    rating: req.body.rating,
     duration: req.body.duration,
     cost: req.body.cost,
     hashtags: req.body.hashtags,
@@ -122,7 +129,7 @@ router.post("/postComment", (req, res) => {
     city: req.body.city,
     itinerary_id: req.body.itinerary_id,
     comment: req.body.comment,
-    userName: req.body.userName
+    username: req.body.username
   });
   comment.save().then(result => {
     console.log(result);
@@ -138,25 +145,128 @@ router.get("/postComment/:id", (req, res) => {
 
 // -----create user account----------------------
 
-//post user details and create account
-router.post("/createAccount", (req, res) => {
-
-  console.log(req.body)
-  const account = new Account({
-    // userImage: req.file.path,
-    userName: req.body.user.userName,
-    firstName: req.body.user.firstName,
-    lastName: req.body.user.lastName,
-    email: req.body.user.email,
-    password: req.body.user.password
-    // country: req.body.country
-  });
-  account.save().then(result => {
-    console.log(result);
-    res.json(result);
-    
-  });
+//create account, check for existing email and post to mlab
+router.post("/signUp", (req, res, next) => {
+  // console.log(req.body);
+  User.find({ email: req.body.email })
+    .exec()
+    .then(user => {
+      if (user.length >= 1) {
+        return res.status(409).json({
+          message: "Mail exists"
+        });
+      } else {
+        bcrypt.hash(req.body.password, 10, (err, hash) => {
+          if (err) {
+            return res.status(500).json({
+              error: err
+            });
+          } else {
+            User.create({
+              // userImage: req.file.path,
+              username: req.body.username,
+              firstname: req.body.firstname,
+              lastname: req.body.lastname,
+              email: req.body.email,
+              password: hash,
+              selectedCountry: req.body.selectedCountry
+            })
+              .then(result => {
+                console.log(result);
+                res.status(201).json({
+                  message: "User created"
+                });
+              })
+              .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                  error: err
+                });
+              });
+          }
+        });
+      }
+    });
 });
+
+//delete user by _id
+router.delete("/deleteUser/:userId", (req, res, next) => {
+  User.remove({ _id: req.params.userId })
+    .exec()
+    .then(result => {
+      res.status(200).json({
+        message: "User deleted"
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+});
+
+//create login post
+
+router.post("/login", (req, res, next) => {
+  User.find({ email: req.body.email })
+    .exec()
+    .then(user => {
+      if (user.length < 1) {
+        return res.status(401).json({
+          message: "Auth failed"
+        });
+      }
+      bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+        if (err) {
+          return res.status(401).json({
+            message: "Auth failed"
+          });
+        }
+        if (result) {
+          const token = jwt.sign(
+            {
+              email: user[0],
+              userId: user[0]._id
+            },
+            process.env.JWT_KEY,
+            {
+              expiresIn: "1h"
+            }
+          );
+          return res.status(200).json({
+            message: "Auth successful",
+            token: token
+          });
+        }
+        if (result) {
+          return res.status(200).json({
+            message: "Auth successful"
+          });
+        }
+        return res.status(401).json({
+          message: "Auth failed"
+        });
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+});
+
+//create login account and post to mlab
+// router.post("/login", (req, res) => {
+//   const login = new Login({
+//     username: req.body.fields.username,
+//     password: req.body.fields.password
+//   });
+//   login.save().then(result => {
+//     res.json(result);
+//   });
+// });
 
 module.exports = router;
 

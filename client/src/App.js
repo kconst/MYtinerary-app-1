@@ -8,7 +8,8 @@ import SignUp from "./components/Header/SignUp";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Itinerary from "./components/Itinerary";
-import AccountForm from "./components/AccountForm2";
+import SignUpForm from "./components/SignUp";
+import LoginPage from "./components/Login";
 
 class App extends Component {
   render() {
@@ -21,7 +22,8 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
           <Route path="/itineraries/:city" component={Itinerary} />
-          <Route path="/accountCreate" component={AccountForm} />
+          <Route path="/signUpPage" component={SignUpForm} />
+          <Route path="/loginPage" component={LoginPage} />
           {/* <Route path="/itineraries/:itinerary_id" component={Activity} /> */}
           <Footer />
           {/* <Route component = {Error}/> */}

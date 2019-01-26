@@ -8,8 +8,8 @@ class Itinerary extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //itineraries: [],
-      showComponent: ""
+      showComponent: "",
+      isToggleOpen: false
     };
     this.handleToggle = this.handleToggle.bind(this);
   }
@@ -24,10 +24,17 @@ class Itinerary extends Component {
   handleToggle(event) {
     event.preventDefault();
     console.log(event.target.id);
-    
-    this.setState({
-      showComponent: event.target.id
-    });
+    if (!this.state.isToggleOpen) {
+      this.setState({
+        showComponent: event.target.id,
+        isToggleOpen: true
+      });
+    } else {
+      this.setState({
+        showComponent: "",
+        isToggleOpen: false
+      });
+    }
   }
 
   render() {
@@ -49,7 +56,7 @@ class Itinerary extends Component {
                     />
                     <figcaption>{result.userName}</figcaption>
                   </div>
-                  <div class="itinerary-text-wrapper">
+                  <div className="itinerary-text-wrapper">
                     <div className="itinerary-text-outer">
                       <h5>{result.title}</h5>
                     </div>
@@ -60,21 +67,19 @@ class Itinerary extends Component {
                       <p>Hashtags: {result.hashtags}</p>
                     </div>
                   </div>
-                 
                 </div>
                 <div>
-                    <button
-                      className="view"
-                      id={result._id}
-                      onClick={this.handleToggle}
-                    >
-                      View
-                    </button>
-
-                    {this.state.showComponent === result._id ? (
-                      <Activity id={result._id} />
-                    ) : null}
-                  </div>
+                  {this.state.showComponent === result._id ? (
+                    <Activity id={result._id} />
+                  ) : null}
+                  <button
+                    className="view"
+                    id={result._id}
+                    onClick={this.handleToggle}
+                  >
+                    {this.state.isToggleOpen ? "Close" : "View"}
+                  </button>
+                </div>
               </Fragment>
             </div>
           );

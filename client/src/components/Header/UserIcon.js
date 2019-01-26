@@ -20,8 +20,12 @@ class UserIcon extends Component {
         {/* <!-- Modal Structure --> */}
         <div id="modal1" className="modal">
           <ul className="modal-content">
-            <NavLink to="/accountCreate">Create Account</NavLink>
-            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/signUpPage" className="modal-close">
+              Create Account
+            </NavLink>
+            <NavLink to="/loginPage" className="modal-close">
+              Login
+            </NavLink>
           </ul>
           <div className="modal-footer">
             <button className="modal-close">Close</button>

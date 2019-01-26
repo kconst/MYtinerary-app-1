@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import AccountForm from "./AccountForm";
 
 // import Itinerary from "./Itinerary";
 // import Itinerary from "./Itinerary";
@@ -35,7 +34,6 @@ class Home extends Component {
         <div className="TextWrapper">
           <p>Want to build your own MYtinerary?</p>
         </div>
-       
       </Fragment>
     );
   }
